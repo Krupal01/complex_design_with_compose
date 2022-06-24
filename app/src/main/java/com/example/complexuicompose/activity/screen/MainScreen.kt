@@ -1,6 +1,7 @@
 package com.example.complexuicompose.activity.screen
 
 import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.DismissDirection
@@ -10,8 +11,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.complexuicompose.R
+import com.example.complexuicompose.activity.composable.CollapsableToolbar
 import com.example.complexuicompose.activity.composable.MotionLayoutCompose
 import com.example.complexuicompose.activity.composable.SwipeItemLazyColumn
 
@@ -21,7 +27,24 @@ fun MainScreen(
     navController: NavController
 ) {
 
-    MotionLayoutCompose()
+    CollapsableToolbar (
+        title = {
+            Text(text = "title", fontWeight = FontWeight.Black)
+        },
+        toolbarBody = {
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = null ,
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.FillBounds
+            )
+        },
+        scrollableBody = {
+            Text(text = "hello world")
+        }
+    )
+
+//    MotionLayoutCompose()
 
 //    val listm = remember {
 //        mutableStateListOf("sd","Sfd","sdfsd","sfsd")
