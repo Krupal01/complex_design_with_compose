@@ -1,7 +1,9 @@
 package com.example.complexuicompose.activity.screen
 
+import android.graphics.Point
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.DismissDirection
 import androidx.compose.material.ExperimentalMaterialApi
@@ -19,10 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.complexuicompose.R
-import com.example.complexuicompose.activity.composable.BatteryCompose
-import com.example.complexuicompose.activity.composable.CollapsableToolbar
-import com.example.complexuicompose.activity.composable.MotionLayoutCompose
-import com.example.complexuicompose.activity.composable.SwipeItemLazyColumn
+import com.example.complexuicompose.activity.composable.*
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -30,18 +29,36 @@ fun MainScreen(
     navController: NavController
 ) {
 
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        LineChart(
+            modifier = Modifier.padding(all = 10.dp).fillMaxWidth().weight(1f).border(width = 1.dp, color = Color.Black),
+            listXValues = arrayListOf(0.0f,0.1f,0.3f,0.5f,0.6f,0.7f),
+            listYValues =  arrayListOf(0.2f,0.3f,0.15f,0.4f,0.5f,0.7f),
+        )
+        BarChart(
+            modifier = Modifier.padding(all = 10.dp).fillMaxWidth().weight(1f).border(width = 1.dp, color = Color.Black),
+            points = listOf(
+                Point(10, 10),
+                Point(90, 100),
+                Point(170, 30),
+                Point(250, 200),
+            )
+        )
+    }
 
-    BatteryCompose(
-        modifier = Modifier.size(width = 100.dp , height = 200.dp),
-        textStyle = TextStyle(
-            color = Color.Black,
-            fontSize = 10.sp,
-            fontWeight = FontWeight.Normal
-        ),
-        backgroundColor = Color.Black,
-        color = Color.Green,
-        percentage = 0.8f
-    )
+//    BatteryCompose(
+//        modifier = Modifier.size(width = 100.dp , height = 200.dp),
+//        textStyle = TextStyle(
+//            color = Color.Black,
+//            fontSize = 10.sp,
+//            fontWeight = FontWeight.Normal
+//        ),
+//        backgroundColor = Color.Black,
+//        color = Color.Green,
+//        percentage = 0.8f
+//    )
 
 
 //    CollapsableToolbar (
