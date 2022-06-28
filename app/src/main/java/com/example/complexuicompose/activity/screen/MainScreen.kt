@@ -9,10 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
@@ -33,18 +30,46 @@ fun MainScreen(
 ) {
 
     val childNavController = rememberNavController()
+    var mDisplayMenu by remember { mutableStateOf(false) }
+    val badgeHome = remember { mutableStateOf(0L) }
+    val badgeEdit = remember { mutableStateOf(10L) }
+    val badgePerson = remember { mutableStateOf(0L) }
+    val badgeFavorite = remember { mutableStateOf(2L) }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = { Text("Main", color = Color.White) } ,
                 backgroundColor = Color(0xff0f9d58),
                 actions = {
+
                     IconButton(onClick = {}){
                         BadgesIcon(
                             icon = Icons.Default.Favorite,
                             contentDescription ="" ,
-                            badges = 10
+                            badges = badgeFavorite.value
                         )
+                    }
+
+                    IconButton(onClick = { mDisplayMenu = !mDisplayMenu }) {
+                        Icon(Icons.Default.MoreVert, "")
+                    }
+                    // Creating a dropdown menu
+                    DropdownMenu(
+                        expanded = mDisplayMenu,
+                        onDismissRequest = { mDisplayMenu = false }
+                    ) {
+                         DropdownMenuItem(onClick = { badgeFavorite.value+=1 }) {
+                             Text(text = "Add Badge in Favorite")
+                         }
+                        DropdownMenuItem(onClick = { badgeHome.value+=1}) {
+                            Text(text = "Add Badge in Home")
+                        }
+                        DropdownMenuItem(onClick = { badgeEdit.value+=1 }) {
+                            Text(text = "Add Badge in Edit")
+                        }
+                        DropdownMenuItem(onClick = {badgePerson.value+=1 }) {
+                            Text(text = "Add Badge in Person")
+                        }
                     }
                 }
             )
@@ -56,19 +81,19 @@ fun MainScreen(
                         name = SCREEN1,
                         icon = Icons.Filled.Home,
                         route = SCREEN1,
-                        badges = 0
+                        badges = badgeHome.value
                     ),
                     BottomNavModel(
                         name = SCREEN2,
                         icon = Icons.Filled.Edit,
                         route = SCREEN2,
-                        badges = 8
+                        badges = badgeEdit.value
                     ),
                     BottomNavModel(
                         name = SCREEN3,
                         icon = Icons.Filled.Person,
                         route = SCREEN3,
-                        badges = 5
+                        badges = badgeFavorite.value
                     ),
                 ),
                 navController = childNavController
