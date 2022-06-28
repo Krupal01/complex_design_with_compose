@@ -23,12 +23,125 @@ import androidx.navigation.compose.rememberNavController
 import com.example.complexuicompose.R
 import com.example.complexuicompose.activity.composable.*
 
-@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MainScreen(
     navController: NavController
 ) {
 
+    ViewSearchTopBar()
+//    MotionLayoutCompose()
+//    ViewCollapsingToolbar()
+//    ViewBadge()
+//    ViewCharts()
+//    ViewBatteryCompose()
+//    ViewSwipeToDismiss()
+
+}
+
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@Composable
+fun ViewSearchTopBar() {
+    val searchbarState = remember {
+        mutableStateOf(SearchBarState.CLOSED)
+    }
+    val searchableText = remember {
+        mutableStateOf("")
+    }
+    Scaffold(
+        topBar ={
+            SearchTopBar(
+                modifier = Modifier.fillMaxWidth(),
+                title = { Text(text = "main") },
+                searchBarState = searchbarState.value ,
+                searchTextState = searchableText.value,
+                onTextChange = {
+                    searchableText.value =  it
+                },
+                onCloseClicked = {
+                    searchbarState.value = SearchBarState.CLOSED
+                },
+                leadingIcon = Icons.Default.Search,
+                onLeadingClick = {},
+                actions = {
+                    IconButton(onClick = {
+                        searchbarState.value = SearchBarState.OPEN
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Search,
+                            contentDescription = "Leading Icon",
+                            tint = Color.White
+                        )
+                    }
+                    IconButton(onClick = {}) {
+                        Icon(
+                            imageVector = Icons.Default.Favorite,
+                            contentDescription = "Leading Icon",
+                            tint = Color.White
+                        )
+                    }
+                }
+            )
+        },
+        content = {}
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ViewSwipeToDismiss() {
+    val listm = remember {
+        mutableStateListOf("sd","Sfd","sdfsd","sfsd")
+    }
+    SwipeItemLazyColumn(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(all = 2.dp),
+        items = listm,
+        itemCompose = {
+            Text(text = it.toString(), modifier = Modifier.fillMaxWidth())
+        },
+        directions = setOf(DismissDirection.EndToStart, DismissDirection.StartToEnd),
+        swipeAction = {
+            when(it.dismissDirection){
+                DismissDirection.StartToEnd -> {
+                    Log.i("action","start to end")
+                }
+                DismissDirection.EndToStart -> {
+                    Log.i("action","end to start")
+                }
+                null -> {
+                    Log.i("action","null")
+                }
+
+            }
+        }
+    )
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun ViewCollapsingToolbar() {
+    CollapsableToolbar (
+        title = {
+            Text(text = "title", fontWeight = FontWeight.Black)
+        },
+        toolbarBody = {
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_background),
+                contentDescription = null ,
+                modifier = Modifier.fillMaxWidth(),
+                contentScale = ContentScale.FillBounds
+            )
+        },
+        scrollableBody = {
+            Text(text = "hello world")
+        }
+    )
+}
+
+//to view badges , Bottom Navbar , TopAppBar , Dropdown Menu
+@Composable
+fun ViewBadge() {
     val childNavController = rememberNavController()
     var mDisplayMenu by remember { mutableStateOf(false) }
     val badgeHome = remember { mutableStateOf(0L) }
@@ -58,9 +171,9 @@ fun MainScreen(
                         expanded = mDisplayMenu,
                         onDismissRequest = { mDisplayMenu = false }
                     ) {
-                         DropdownMenuItem(onClick = { badgeFavorite.value+=1 }) {
-                             Text(text = "Add Badge in Favorite")
-                         }
+                        DropdownMenuItem(onClick = { badgeFavorite.value+=1 }) {
+                            Text(text = "Add Badge in Favorite")
+                        }
                         DropdownMenuItem(onClick = { badgeHome.value+=1}) {
                             Text(text = "Add Badge in Home")
                         }
@@ -102,84 +215,49 @@ fun MainScreen(
     ) {
         NavHostForBottomNavBar(padding =it , navController = childNavController)
     }
+}
 
+@Composable
+fun ViewCharts() {
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        LineChart(
+            modifier = Modifier
+                .padding(all = 10.dp)
+                .fillMaxWidth()
+                .weight(1f)
+                .border(width = 1.dp, color = Color.Black),
+            listXValues = arrayListOf(0.0f,0.1f,0.3f,0.5f,0.6f,0.7f),
+            listYValues =  arrayListOf(0.2f,0.3f,0.15f,0.4f,0.5f,0.7f),
+        )
+        BarChart(
+            modifier = Modifier
+                .padding(all = 10.dp)
+                .fillMaxWidth()
+                .weight(1f)
+                .border(width = 1.dp, color = Color.Black),
+            points = listOf(
+                Point(10, 10),
+                Point(90, 100),
+                Point(170, 30),
+                Point(250, 200),
+            )
+        )
+    }
+}
 
-//    Column(
-//        modifier = Modifier.fillMaxWidth()
-//    ) {
-//        LineChart(
-//            modifier = Modifier.padding(all = 10.dp).fillMaxWidth().weight(1f).border(width = 1.dp, color = Color.Black),
-//            listXValues = arrayListOf(0.0f,0.1f,0.3f,0.5f,0.6f,0.7f),
-//            listYValues =  arrayListOf(0.2f,0.3f,0.15f,0.4f,0.5f,0.7f),
-//        )
-//        BarChart(
-//            modifier = Modifier.padding(all = 10.dp).fillMaxWidth().weight(1f).border(width = 1.dp, color = Color.Black),
-//            points = listOf(
-//                Point(10, 10),
-//                Point(90, 100),
-//                Point(170, 30),
-//                Point(250, 200),
-//            )
-//        )
-//    }
-
-//    BatteryCompose(
-//        modifier = Modifier.size(width = 100.dp , height = 200.dp),
-//        textStyle = TextStyle(
-//            color = Color.Black,
-//            fontSize = 10.sp,
-//            fontWeight = FontWeight.Normal
-//        ),
-//        backgroundColor = Color.Black,
-//        color = Color.Green,
-//        percentage = 0.8f
-//    )
-
-
-//    CollapsableToolbar (
-//        title = {
-//            Text(text = "title", fontWeight = FontWeight.Black)
-//        },
-//        toolbarBody = {
-//            Image(
-//                painter = painterResource(id = R.drawable.ic_launcher_background),
-//                contentDescription = null ,
-//                modifier = Modifier.fillMaxWidth(),
-//                contentScale = ContentScale.FillBounds
-//            )
-//        },
-//        scrollableBody = {
-//            Text(text = "hello world")
-//        }
-//    )
-
-//    MotionLayoutCompose()
-
-//    val listm = remember {
-//        mutableStateListOf("sd","Sfd","sdfsd","sfsd")
-//    }
-//    SwipeItemLazyColumn(
-//        modifier = Modifier.fillMaxWidth().padding(all = 2.dp),
-//        items = listm,
-//        itemCompose = {
-//            Text(text = it.toString(), modifier = Modifier.fillMaxWidth())
-//        },
-//        directions = setOf(DismissDirection.EndToStart, DismissDirection.StartToEnd),
-//        swipeAction = {
-//            when(it.dismissDirection){
-//                DismissDirection.StartToEnd -> {
-//                    Log.i("action","start to end")
-//                }
-//                DismissDirection.EndToStart -> {
-//                    Log.i("action","end to start")
-//                }
-//                null -> {
-//                    Log.i("action","null")
-//                }
-//
-//            }
-//        }
-//    )
-
-
+@Composable
+fun ViewBatteryCompose() {
+    BatteryCompose(
+        modifier = Modifier.size(width = 100.dp , height = 200.dp),
+        textStyle = TextStyle(
+            color = Color.Black,
+            fontSize = 10.sp,
+            fontWeight = FontWeight.Normal
+        ),
+        backgroundColor = Color.Black,
+        color = Color.Green,
+        percentage = 0.8f
+    )
 }
