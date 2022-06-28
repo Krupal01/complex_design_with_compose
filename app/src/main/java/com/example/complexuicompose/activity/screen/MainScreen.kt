@@ -34,6 +34,21 @@ fun MainScreen(
 
     val childNavController = rememberNavController()
     Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("Main", color = Color.White) } ,
+                backgroundColor = Color(0xff0f9d58),
+                actions = {
+                    IconButton(onClick = {}){
+                        BadgesIcon(
+                            icon = Icons.Default.Favorite,
+                            contentDescription ="" ,
+                            badges = 10
+                        )
+                    }
+                }
+            )
+        },
         bottomBar = {
             BadgesBottomNavBar(
                 bottomNavItems = listOf(
