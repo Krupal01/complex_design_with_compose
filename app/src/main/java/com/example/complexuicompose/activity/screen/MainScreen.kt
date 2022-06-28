@@ -1,15 +1,17 @@
 package com.example.complexuicompose.activity.screen
 
+import android.annotation.SuppressLint
 import android.graphics.Point
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.DismissDirection
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +22,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.complexuicompose.R
 import com.example.complexuicompose.activity.composable.*
 
@@ -29,24 +32,56 @@ fun MainScreen(
     navController: NavController
 ) {
 
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        LineChart(
-            modifier = Modifier.padding(all = 10.dp).fillMaxWidth().weight(1f).border(width = 1.dp, color = Color.Black),
-            listXValues = arrayListOf(0.0f,0.1f,0.3f,0.5f,0.6f,0.7f),
-            listYValues =  arrayListOf(0.2f,0.3f,0.15f,0.4f,0.5f,0.7f),
-        )
-        BarChart(
-            modifier = Modifier.padding(all = 10.dp).fillMaxWidth().weight(1f).border(width = 1.dp, color = Color.Black),
-            points = listOf(
-                Point(10, 10),
-                Point(90, 100),
-                Point(170, 30),
-                Point(250, 200),
+    val childNavController = rememberNavController()
+    Scaffold(
+        bottomBar = {
+            BadgesBottomNavBar(
+                bottomNavItems = listOf(
+                    BottomNavModel(
+                        name = SCREEN1,
+                        icon = Icons.Filled.Home,
+                        route = SCREEN1,
+                        badges = 0
+                    ),
+                    BottomNavModel(
+                        name = SCREEN2,
+                        icon = Icons.Filled.Edit,
+                        route = SCREEN2,
+                        badges = 8
+                    ),
+                    BottomNavModel(
+                        name = SCREEN3,
+                        icon = Icons.Filled.Person,
+                        route = SCREEN3,
+                        badges = 5
+                    ),
+                ),
+                navController = childNavController
             )
-        )
+        }
+    ) {
+        NavHostForBottomNavBar(padding =it , navController = childNavController)
     }
+
+
+//    Column(
+//        modifier = Modifier.fillMaxWidth()
+//    ) {
+//        LineChart(
+//            modifier = Modifier.padding(all = 10.dp).fillMaxWidth().weight(1f).border(width = 1.dp, color = Color.Black),
+//            listXValues = arrayListOf(0.0f,0.1f,0.3f,0.5f,0.6f,0.7f),
+//            listYValues =  arrayListOf(0.2f,0.3f,0.15f,0.4f,0.5f,0.7f),
+//        )
+//        BarChart(
+//            modifier = Modifier.padding(all = 10.dp).fillMaxWidth().weight(1f).border(width = 1.dp, color = Color.Black),
+//            points = listOf(
+//                Point(10, 10),
+//                Point(90, 100),
+//                Point(170, 30),
+//                Point(250, 200),
+//            )
+//        )
+//    }
 
 //    BatteryCompose(
 //        modifier = Modifier.size(width = 100.dp , height = 200.dp),
