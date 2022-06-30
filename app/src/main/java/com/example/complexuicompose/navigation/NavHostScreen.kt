@@ -5,12 +5,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.example.complexuicompose.activity.screen.LoginScreen
 import com.example.complexuicompose.activity.screen.MainScreen
 import com.example.complexuicompose.activity.screen.SplashScreen
+import com.example.complexuicompose.viewmodel.MainViewModel
 
 @Composable
 fun NavHostScreen(
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: MainViewModel
 ) {
     NavHost(navController = navController , startDestination = Screens.SplashScreen.route){
 
@@ -18,6 +21,12 @@ fun NavHostScreen(
             route = Screens.SplashScreen.route
         ){
             SplashScreen(navController = navController)
+        }
+
+        composable(
+            route = Screens.LoginScreen.route
+        ){
+            LoginScreen(navController = navController,viewModel = viewModel)
         }
 
         composable(

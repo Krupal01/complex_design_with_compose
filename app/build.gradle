@@ -5,7 +5,7 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id "com.google.protobuf" version "0.8.17"
 }
-
+apply plugin: 'com.android.application'
 android {
     compileSdk 32
 
@@ -81,6 +81,7 @@ dependencies {
 
     implementation 'androidx.datastore:datastore-preferences:1.0.0'
 
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
 }
 
 protobuf {

@@ -30,12 +30,12 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             ComplexUIComposeTheme {
-//                val navController = rememberNavController()
-//                NavHostScreen(navController = navController)
+                val navController = rememberNavController()
+                NavHostScreen(navController = navController,viewModel = viewModel)
                 
 //                ProtoDataStoreCheck(viewModel = viewModel)
                 
-                PreferenceDatastoreCheck(viewModel = viewModel)
+//                PreferenceDatastoreCheck(viewModel = viewModel)
             }
         }
     }
