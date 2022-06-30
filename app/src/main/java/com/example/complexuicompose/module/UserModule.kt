@@ -1,6 +1,7 @@
 package com.example.complexuicompose.module
 
 import android.content.Context
+import com.example.complexuicompose.repository.PreferenceUserRepository
 import com.example.complexuicompose.repository.ProtoUserRepository
 import dagger.Module
 import dagger.Provides
@@ -19,4 +20,9 @@ class UserModule {
         return ProtoUserRepository(context)
     }
 
+    @Provides
+    @Singleton
+    fun getPreferenceRepository(@ApplicationContext context : Context): PreferenceUserRepository {
+        return PreferenceUserRepository(context)
+    }
 }

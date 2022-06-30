@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.rememberNavController
+import com.example.complexuicompose.activity.screen.PreferenceDatastoreCheck
 import com.example.complexuicompose.activity.screen.ProtoDataStoreCheck
 import com.example.complexuicompose.navigation.NavHostScreen
 import com.example.complexuicompose.ui.theme.ComplexUIComposeTheme
@@ -32,7 +33,9 @@ class MainActivity : ComponentActivity() {
 //                val navController = rememberNavController()
 //                NavHostScreen(navController = navController)
                 
-                ProtoDataStoreCheck(viewModel = viewModel)
+//                ProtoDataStoreCheck(viewModel = viewModel)
+                
+                PreferenceDatastoreCheck(viewModel = viewModel)
             }
         }
     }
