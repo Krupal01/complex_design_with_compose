@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.example.complexuicompose";
+option java_multiple_files = true;
+
+message User{
+  bool is_logged_in = 1;
+  string user_name = 2;
+}
