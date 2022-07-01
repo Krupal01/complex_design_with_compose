@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.navigation.NavController
 import com.example.complexuicompose.activity.LocalFacebookCallbackManager
 import com.example.complexuicompose.navigation.Screens
@@ -25,6 +26,7 @@ import com.example.complexuicompose.utils.AuthResult
 import com.example.complexuicompose.viewmodel.MainViewModel
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
+import com.facebook.login.LoginBehavior
 import com.facebook.login.LoginManager
 import com.facebook.login.LoginResult
 import com.google.android.gms.common.api.ApiException
@@ -59,6 +61,7 @@ fun LoginScreen(
             object : FacebookCallback<LoginResult> {
                 override fun onSuccess(loginResult: LoginResult) {
                     Log.i("FB Sign In","onSuccess $loginResult")
+                    navController.navigate(Screens.MainScreen.route)
                 }
 
                 override fun onCancel() {
@@ -89,8 +92,11 @@ fun LoginScreen(
             errorText = text,
             onClick = {
                 text = null
-                LoginManager.getInstance()
-                    .logInWithReadPermissions(context.findActivity()!!, Arrays.asList("email", "user_friends"));
+                LoginManager.getInstance().setLoginBehavior(LoginBehavior.WEB_ONLY)
+                    .logInWithReadPermissions(
+                        context.findActivity()!!,
+                        Arrays.asList("email", "user_friends"),
+                    )
             }
         )
     }
